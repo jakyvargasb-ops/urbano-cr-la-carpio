@@ -345,7 +345,7 @@
         "stroke_color": "#7e22ce",
         "stroke_width": 1.2
       },
-      "caveat": "Capa publicada con atributos de dirección, datos demográficos de personas afectadas, conteos de fallecimientos, notas de texto libre y coordenadas redundantes retirados. Se conservan los puntos de geometría originales y sus demás atributos. El equipo solicitante declara que la información fue revisada y es pública; procesada para el geovisor en EPSG:4326."
+      "caveat": "Se excluyeron únicamente los atributos DIRECCION, POBL_MENOR, POBL_ADULT y ADULTO_MAY. Se conservaron los demás atributos y la geometría puntual original. El equipo solicitante declara que la información fue revisada y es pública; procesada para el geovisor en EPSG:4326."
     },
     {
       "id": "local-inundaciones",
