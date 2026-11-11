@@ -660,6 +660,9 @@
   function createSafePopupElement(titleText, rows, badgeText) {
     var wrap = document.createElement("div");
     wrap.style.maxWidth = "290px";
+    wrap.style.maxHeight = "min(65vh, 520px)";
+    wrap.style.overflowY = "auto";
+    wrap.style.overflowWrap = "anywhere";
     wrap.style.fontFamily = "system-ui, sans-serif";
     wrap.style.fontSize = "12.5px";
 
@@ -1194,14 +1197,14 @@
         var nameVal = props.nombre || props.name || props.NAM || defaultTitle;
         var rows = [];
         Object.keys(props).forEach(function (k) {
-          if (k === "nombre" || k === "name") return;
-          if (props[k] !== null && props[k] !== undefined && String(props[k]).trim() !== "") {
-            rows.push([k, String(props[k])]);
-          }
+          var value = props[k];
+          if (value === null || value === undefined || String(value).trim() === "") value = "—";
+          else if (typeof value === "object") value = JSON.stringify(value);
+          rows.push([k, String(value)]);
         });
         if (!rows.length) rows.push(["Estado", "Capa vectorial cargada"]);
-        var dom = createSafePopupElement(String(nameVal), rows.slice(0, 8), badgeTitle);
-        new window.maplibregl.Popup({ maxWidth: "320px" }).setLngLat(e.lngLat).setDOMContent(dom).addTo(mapInstance);
+        var dom = createSafePopupElement(String(nameVal), rows, badgeTitle);
+        new window.maplibregl.Popup({ maxWidth: "360px" }).setLngLat(e.lngLat).setDOMContent(dom).addTo(mapInstance);
       });
       mapInstance.on("mouseenter", layerId, function () {
         mapInstance.getCanvas().style.cursor = "pointer";
