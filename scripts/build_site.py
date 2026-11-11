@@ -162,7 +162,7 @@ def render_shell(
         )
         maplibre_scripts = (
             '<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js" crossorigin="anonymous"></script>\n'
-            f'  <script src="{html.escape(ctx.site_url("assets/js/geovisor.js"), quote=True)}?v=2.0.7"></script>'
+            f'  <script src="{html.escape(ctx.site_url("assets/js/geovisor.js"), quote=True)}?v=2.0.8"></script>'
         )
 
     updated_raw = manifest["governance"].get("content_updated_at")
@@ -176,7 +176,7 @@ def render_shell(
   <title>{esc(page_title)} · {esc(short_title)}</title>
   <meta name="description" content="{esc(manifest['summary'])}">
   {robots_meta}
-  <link rel="stylesheet" href="{html.escape(ctx.site_url('assets/css/styles.css'), quote=True)}?v=2.0.7">
+  <link rel="stylesheet" href="{html.escape(ctx.site_url('assets/css/styles.css'), quote=True)}?v=2.0.8">
   {maplibre_head}
 </head>
 <body>
@@ -236,7 +236,7 @@ def render_shell(
     </div>
   </footer>
 
-  <script src="{html.escape(ctx.site_url('assets/js/ui.js'), quote=True)}?v=2.0.7"></script>
+  <script src="{html.escape(ctx.site_url('assets/js/ui.js'), quote=True)}?v=2.0.8"></script>
   {maplibre_scripts}
 </body>
 </html>

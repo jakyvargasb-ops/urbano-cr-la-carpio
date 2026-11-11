@@ -479,6 +479,43 @@
         "stroke_width": 1.1
       },
       "caveat": "Huellas detectadas por satélite; pueden incluir estructuras no residenciales. El equipo solicitante declara que la información fue revisada y es pública; procesada para el geovisor en EPSG:4326."
+    },
+    {
+      "id": "local-indice-multiamenaza-hex",
+      "title": "Índice local de multiamenaza por hexágono",
+      "group": "Índice de multiamenaza local",
+      "format": "geojson",
+      "geometry_type": "polygon",
+      "status": "en_revision",
+      "source_path": "geovisor/capas/indice_multiamenaza_local.geojson",
+      "expected_file_hint": "geovisor/capas/indice_multiamenaza_local.geojson",
+      "resolution": "304 hexágonos de ~30 m; intersecciones calculadas en EPSG:5367; salida EPSG:4326",
+      "default_visible": true,
+      "style": {
+        "fill_color": "#bdbdbd",
+        "fill_color_expression": [
+          "match",
+          [
+            "get",
+            "clase_multiamenaza"
+          ],
+          "Muy bajo",
+          "#1a9850",
+          "Bajo",
+          "#91cf60",
+          "Moderado",
+          "#fee08b",
+          "Alto",
+          "#fc8d59",
+          "Muy alto",
+          "#d73027",
+          "#808080"
+        ],
+        "fill_opacity": 0.68,
+        "stroke_color": "#334155",
+        "stroke_width": 0.8
+      },
+      "caveat": "Índice exploratorio: 50% contribución areal de susceptibilidad a deslizamientos y 50% proporción del hexágono dentro de polígonos de inundación potencial. La capa de inundación no tiene severidad; el historial CME se muestra como conteo de contraste y no se suma al índice. Cuatro celdas sin cobertura de deslizamientos quedan Sin dato; las celdas con cobertura parcial llevan indicador. La población por celda se distribuye desde pob_alta_5_4_hab (total sectorial 30.252), escenario estimado, no censo. Pesos y clases requieren validación técnica. Simbología: verde muy bajo, verde claro bajo, amarillo moderado, naranja alto, rojo muy alto y gris sin dato."
     }
   ]
 }
