@@ -515,18 +515,18 @@
         "stroke_color": "#334155",
         "stroke_width": 0.8
       },
-      "caveat": "Índice exploratorio: 50% contribución areal de susceptibilidad a deslizamientos y 50% proporción del hexágono dentro de polígonos de inundación potencial. La capa de inundación no tiene severidad; el historial CME se muestra como conteo de contraste y no se suma al índice. Cuatro celdas sin cobertura de deslizamientos quedan Sin dato; las celdas con cobertura parcial llevan indicador. La población por celda se distribuye desde pob_alta_5_4_hab (total sectorial 30.252), escenario estimado, no censo. Pesos y clases requieren validación técnica. Simbología: verde muy bajo, verde claro bajo, amarillo moderado, naranja alto, rojo muy alto y gris sin dato. La aptitud se muestra aparte: protección de río o deslizamiento alto/muy alto = Restringido; deslizamiento moderado = Condicionado."
+      "caveat": "Índice exploratorio: 50% contribución areal de susceptibilidad a deslizamientos MODERADA/ALTA/MUY ALTA (CATEGORIA_ 3–5) y 50% proporción del hexágono dentro de polígonos de inundación potencial. BAJA/MUY BAJA no aportan puntaje. La capa de inundación no tiene severidad; los incidentes CME son conteo de contraste. La población por celda se distribuye desde pob_alta_5_4_hab (total sectorial 30.252), escenario estimado, no censo. Pesos y clases requieren validación técnica. Las zonas de protección de río se muestran aparte como conservación natural."
     },
     {
       "id": "local-restricciones-desarrollo-hex",
-      "title": "Restricciones y condicionantes para desarrollo urbano",
+      "title": "Conservación natural y amenaza por deslizamiento (moderada, alta y muy alta)",
       "group": "Restricciones de desarrollo",
       "format": "geojson",
       "geometry_type": "polygon",
       "status": "en_revision",
       "source_path": "geovisor/capas/restricciones_desarrollo_hex.geojson",
       "expected_file_hint": "geovisor/capas/restricciones_desarrollo_hex.geojson",
-      "resolution": "281 hexágonos con restricción o condicionante; derivada de polígonos locales en EPSG:5367; salida EPSG:4326",
+      "resolution": "Celdas que intersectan protección de río o deslizamiento CATEGORIA_ 3–5; polígonos locales EPSG:5367, salida EPSG:4326",
       "default_visible": true,
       "style": {
         "fill_color": "#dc2626",
@@ -536,29 +536,33 @@
             "get",
             "restriccion_desarrollo"
           ],
-          "Restringido",
+          "Conservación natural",
+          "#16a34a",
+          "Amenaza por deslizamiento",
           "#dc2626",
-          "Condicionado",
-          "#f59e0b",
+          "Conservación natural y amenaza por deslizamiento",
+          "#7e22ce",
           "#00000000"
         ],
         "fill_opacity": 0.38,
-        "stroke_color": "#dc2626",
+        "stroke_color": "#b91c1c",
         "stroke_color_expression": [
           "match",
           [
             "get",
             "restriccion_desarrollo"
           ],
-          "Restringido",
+          "Conservación natural",
+          "#15803d",
+          "Amenaza por deslizamiento",
           "#b91c1c",
-          "Condicionado",
-          "#d97706",
+          "Conservación natural y amenaza por deslizamiento",
+          "#6b21a8",
           "#00000000"
         ],
         "stroke_width": 1.2
       },
-      "caveat": "Criterio analítico por intersección: cualquier área de protección de ríos o deslizamiento ALTA/MUY ALTA marca Restringido; MODERADA marca Condicionado; categorías BAJA/MUY BAJA no son restricción dura, pero siguen dentro del índice de amenaza. El sombreado cubre el hexágono completo cuando hay intersección parcial; consultar porcentajes y las capas fuente para delimitar el área exacta. No sustituye la delimitación o validación legal de la autoridad competente. Rojo: Restringido; ámbar: Condicionado."
+      "caveat": "Criterio por intersección: las áreas de protección de río se identifican como conservación natural (verde); las áreas CATEGORIA_ 3, 4 y 5 (MODERADA, ALTA, MUY ALTA) se identifican como amenaza por deslizamiento (rojo); el solape aparece morado. BAJA/MUY BAJA no se incluyen en esta capa de restricción. Cuando la intersección es parcial, se resalta el hexágono completo; consulte porcentajes y las capas fuente para el alcance espacial exacto. Criterio de planificación indicado por el equipo; no sustituye delimitaciones normativas ni validación legal."
     }
   ]
 }
