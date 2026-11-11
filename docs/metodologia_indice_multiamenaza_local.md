@@ -7,6 +7,7 @@
 - `malla_hexagonal_poblacion.geojson`: 304 hexágonos, aproximadamente 30 m de vértice a vértice.
 - `deslizamientos.geojson`: polígonos con categorías `CATEGORIA_` (1–5) y nombres `AMENAZ_DES` (muy baja a muy alta).
 - `inundaciones.geojson`: huellas de inundación potencial (`ORIGEN_COB`); no contiene severidad ni periodo de retorno.
+- `proteccion_rios.geojson`: polígonos de protección con `TIPO` y `DIST_PROTE`; se usan como restricción urbana, no como puntaje de amenaza.
 - `sectores_estimacion_geojson.geojson`: población sectorial del escenario alto `pob_alta_5_4_hab`, cuya suma acordada es 30.252.
 - `incidentes_cme_2019_2026.geojson`: puntos de incidentes con `TIPO_EVENT`, `FECHA` y geometría.
 
@@ -24,6 +25,17 @@ Para cada hexágono se calcula:
 
    Se usan pesos iguales como escenario inicial transparente, no como ponderación institucional aprobada. Se aplican clases fijas: 0–<20 muy bajo, 20–<40 bajo, 40–<60 moderado, 60–<80 alto y 80–100 muy alto. Si no hay intersección con el mapa de deslizamientos, el índice queda nulo y la clase es `Sin dato`; la falta de cobertura no se interpreta como amenaza cero. Si la cobertura es parcial, el campo `estado_cobertura_deslizamientos` permite advertirlo al interpretar la puntuación.
 4. **Incidentes CME.** Se cuentan por tipo y hexágono (`incidentes_cme_total_19_26`, `incidentes_deslizamiento`, `incidentes_inundacion`, `incidentes_incendio`). Son evidencia histórica para contraste, no componente del puntaje, por la cantidad limitada de registros y su dependencia de la notificación.
+
+## Restricciones para el desarrollo urbano
+
+Las restricciones se evalúan separadamente del índice de amenaza; no reducen ni reemplazan el puntaje de riesgo:
+
+- **Protección de ríos:** cualquier intersección de un hexágono con `proteccion_rios.geojson` lo marca `Restringido`. Se conservan en atributos el porcentaje de intersección, `TIPO` y `DIST_PROTE`.
+- **Deslizamiento alto o muy alto:** cualquier intersección con `CATEGORIA_` 4 o 5 (`AMENAZ_DES` alta o muy alta) lo marca `Restringido`.
+- **Deslizamiento moderado:** una intersección con `CATEGORIA_` 3 lo marca `Condicionado`, salvo que otra regla ya lo clasifique como restringido.
+- **Muy bajo o bajo:** permanecen en el índice de amenaza, pero no activan por sí solas la restricción dura del modelo.
+
+La capa `restricciones_desarrollo_hex.geojson` incluye los hexágonos restringidos o condicionados y se dibuja sobre el índice: rojo para `Restringido`, ámbar para `Condicionado`. Si la intersección es parcial, el sombreado cubre la celda completa para señalarla como alerta de planificación; los porcentajes de solape y las capas fuente permiten consultar el alcance real dentro del hexágono. Esta clasificación aplica el criterio indicado por el equipo al dato disponible; no sustituye la delimitación normativa ni la validación legal de las autoridades competentes.
 
 ## Distribución de población de 30.252
 
@@ -49,3 +61,4 @@ python scripts/build_local_multihazard_index.py
 ```
 
 El script genera `geovisor/capas/indice_multiamenaza_local.geojson`, que se declara en `geovisor/layers.json`.
+También genera `geovisor/capas/restricciones_desarrollo_hex.geojson` para visualizar las celdas restringidas o condicionadas.

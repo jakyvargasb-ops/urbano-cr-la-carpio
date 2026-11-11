@@ -1267,7 +1267,7 @@
         if (lyr.format === "geojson") {
           var fillColor = (lyr.style && lyr.style.fill_color_expression) || (lyr.style && lyr.style.fill_color) || "#007F8B";
           var fillOpacity = (lyr.style && lyr.style.fill_opacity) !== undefined ? lyr.style.fill_opacity : 0.22;
-          var strokeColor = (lyr.style && lyr.style.stroke_color) || "#14283F";
+          var strokeColor = (lyr.style && lyr.style.stroke_color_expression) || (lyr.style && lyr.style.stroke_color) || "#14283F";
           var strokeWidth = (lyr.style && lyr.style.stroke_width) || 2;
           var chk = document.querySelector('[data-layer-toggle="' + lyr.id + '"]');
           var visibleByDefault = lyr.default_visible !== false;
