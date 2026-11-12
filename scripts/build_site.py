@@ -6,6 +6,7 @@ Generador estático determinista (scripts/build_site.py) para cada repositorio d
 from __future__ import annotations
 
 import argparse
+import csv
 import html
 import json
 import os
@@ -863,6 +864,26 @@ def build_aplicacion_page(
     branding: dict[str, Any],
 ) -> str:
     pid = manifest["id"]
+    stats_dir = ROOT / "geovisor" / "estadisticas"
+    def read_stats(name: str) -> list[dict[str, str]]:
+        path = stats_dir / name
+        if not path.exists():
+            return []
+        with path.open(encoding="utf-8-sig", newline="") as stream:
+            return list(csv.DictReader(stream))
+    category_rows = read_stats("poblacion_por_categoria_riesgo.csv")
+    sector_rows = read_stats("poblacion_por_sector.csv")
+    combo_rows = read_stats("poblacion_por_combinacion_amenazas.csv")
+    indicator_rows = read_stats("indicadores_principales.csv")
+    fmt_num = lambda value: f"{int(float(value or 0)):,}".replace(",", ".")
+    category_colors = {"Muy alto":"#b91c1c", "Alto":"#f97316", "Moderado":"#eab308", "Bajo":"#84cc16", "Muy bajo":"#16a34a", "Sin dato":"#94a3b8"}
+    max_pop = max((int(float(r.get("poblacion",0) or 0)) for r in category_rows), default=1) or 1
+    category_html = "".join(f'<div class="risk-bar-row"><span>{esc(r["categoria"])}</span><div class="risk-bar-track"><div class="risk-bar-fill" style="width:{100*int(r["poblacion"])/max_pop:.1f}%;background:{category_colors.get(r["categoria"],"#64748b")}"></div></div><strong>{fmt_num(r["poblacion"])}</strong><small>{float(r["porcentaje_poblacion"]):.1f}%</small></div>' for r in category_rows)
+    sector_html = "".join(f'<tr><td>{esc(r["sector"] or "Sin sector")}</td><td>{fmt_num(r["poblacion"])}</td><td>{float(r["porcentaje_total"]):.1f}%</td><td>{fmt_num(r["hexagonos"])}</td></tr>' for r in sector_rows)
+    combo_html = "".join(f'<tr><td>{esc(r["combinacion_amenazas"])}</td><td>{fmt_num(r["poblacion"])}</td><td>{float(r["porcentaje_total"]):.1f}%</td></tr>' for r in combo_rows)
+    indicator_by_id = {r["id"]: r for r in indicator_rows}
+    indicator_cards = "".join(f'<article class="stat-card"><div class="stat-value">{fmt_num(indicator_by_id.get(key, {}).get("valor", 30252 if key=="TOTAL" else 0))}</div><div class="stat-label">{esc(indicator_by_id.get(key, {}).get("indicador", "Población estimada total"))}</div></article>' for key in ("I2", "I3", "TOTAL"))
+    dashboard_html = f'''<section class="section" id="dashboard-riesgo"><style>.risk-dashboard-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:1rem}}.risk-wide{{grid-column:1/-1}}.risk-bars{{display:grid;gap:.75rem}}.risk-bar-row{{display:grid;grid-template-columns:6.5rem 1fr 4.4rem 3.2rem;align-items:center;gap:.6rem;font-size:.85rem}}.risk-bar-track{{height:14px;background:#edf1f6;border-radius:8px;overflow:hidden}}.risk-bar-fill{{height:100%;border-radius:8px}}.risk-note{{font-size:.82rem;color:var(--c-text-muted);margin-top:.75rem}}@media(max-width:600px){{.risk-bar-row{{grid-template-columns:5.4rem 1fr 3.7rem}}.risk-bar-row small{{display:none}}}}</style><div class="section-heading"><span class="badge badge-propuesta">Estadísticas territoriales · base para dashboard</span><h2>Exposición de la población a multiamenazas</h2><p>Estimaciones derivadas de 30.252 habitantes distribuidos en la malla hexagonal. La protección de ríos se incorpora como condición Muy Alta.</p></div><div class="stats-strip">{indicator_cards}</div><div class="risk-dashboard-grid"><article class="card"><h3>Población por categoría</h3><div class="risk-bars">{category_html}</div></article><article class="card"><h3>Combinación de amenazas</h3><div class="table-wrap"><table><thead><tr><th>Condición</th><th>Población</th><th>% total</th></tr></thead><tbody>{combo_html}</tbody></table></div></article><article class="card risk-wide"><h3>Distribución por sector</h3><div class="table-wrap"><table><thead><tr><th>Sector</th><th>Población</th><th>% total</th><th>Hexágonos</th></tr></thead><tbody>{sector_html}</tbody></table></div><p class="risk-note">Cada celda se asigna al sector con mayor área de intersección para evitar duplicar población.</p></article></div><p class="risk-note">Los conteos son estimaciones para análisis territorial; la población en riesgo alto/muy alto o protección de ríos es una señal para evaluación, no una decisión individual de reubicación. Las celdas sin dato se muestran aparte.</p></section>'''
     mv = layers_cfg.get("map_view", {})
     grouped: dict[str, list[dict[str, Any]]] = {}
     for lyr in layers_cfg.get("layers", []):
@@ -1142,6 +1163,8 @@ def build_aplicacion_page(
       </div>
       <script id="geovisor-config-data" type="application/json">{safe_json_cfg}</script>
     </section>
+
+    {dashboard_html}
 
     <section class="section">
       <div class="grid-2">
