@@ -487,8 +487,8 @@
       "format": "geojson",
       "geometry_type": "polygon",
       "status": "en_revision",
-      "source_path": "geovisor/capas/indice_multiamenaza_local.geojson",
-      "expected_file_hint": "geovisor/capas/indice_multiamenaza_local.geojson",
+      "source_path": "geovisor/capas/indice_multiamenaza_local_20m.geojson",
+      "expected_file_hint": "geovisor/capas/indice_multiamenaza_local_20m.geojson",
       "resolution": "Malla hexagonal con 20 m entre vértices opuestos; EPSG:5367 → EPSG:4326",
       "default_visible": true,
       "style": {
@@ -524,8 +524,8 @@
       "format": "geojson",
       "geometry_type": "polygon",
       "status": "en_revision",
-      "source_path": "geovisor/capas/restricciones_desarrollo_hex.geojson",
-      "expected_file_hint": "geovisor/capas/restricciones_desarrollo_hex.geojson",
+      "source_path": "geovisor/capas/restricciones_desarrollo_hex_20m.geojson",
+      "expected_file_hint": "geovisor/capas/restricciones_desarrollo_hex_20m.geojson",
       "resolution": "Hexágonos de 20 m; protección de ríos y CATEGORIA_ 4–5; EPSG:5367 → EPSG:4326",
       "default_visible": true,
       "style": {
