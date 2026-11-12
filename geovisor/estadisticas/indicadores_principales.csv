@@ -1,0 +1,5 @@
+﻿id,indicador,valor,unidad,denominador
+I1,Población por categoría multiamenaza,"{""Muy alto"": 4687, ""Alto"": 0, ""Moderado"": 998, ""Bajo"": 2879, ""Muy bajo"": 21681, ""Sin dato"": 7}",habitantes por categoría,30252
+I2,Población expuesta a riesgo Alto/Muy alto o protección de río,4687,habitantes,30252
+I3,Población dentro de protección de ríos,4687,habitantes,30252
+I4,Población por combinación de amenazas,"{""Protección de río; Deslizamiento alto/muy alto"": 4475, ""Deslizamiento alto/muy alto"": 12779, ""Sin intersección identificada"": 12786, ""Protección de río"": 212}",habitantes por combinación no excluyente,30252

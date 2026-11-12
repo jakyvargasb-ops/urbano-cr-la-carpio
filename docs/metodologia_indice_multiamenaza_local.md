@@ -56,3 +56,8 @@ python scripts/build_local_multihazard_index.py
 
 El script genera `geovisor/capas/indice_multiamenaza_local.geojson`, que se declara en `geovisor/layers.json`.
 También genera `geovisor/capas/restricciones_desarrollo_hex.geojson` para visualizar conservación natural y celdas con amenaza por deslizamiento moderada, alta o muy alta.
+
+
+## Tablas estadísticas para dashboard
+
+Las tablas base se encuentran en `geovisor/estadisticas/`. Incluyen población por hexágono, categoría de multiamenaza, sector y combinación de amenazas, además de `indicadores_principales.csv`. Se regeneran con `python scripts/build_risk_statistics.py`. La asignación por sector usa el sector con mayor área de intersección por celda para no duplicar población; las combinaciones de amenazas son excluyentes. La población en protección de ríos forma parte de Muy Alta y del total expuesto.
