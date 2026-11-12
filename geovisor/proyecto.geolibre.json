@@ -160,16 +160,16 @@
       "id": "cr-carpio-hex-poblacion",
       "metadata": {
         "caveat": "Estimación basada en Google Open Buildings v3. Factor base: 4.5 personas/vivienda. Modelo piecewise calibrado con datos locales (ratio Google/local = 0.988).",
-        "resolution": "Hexágonos ~30 m (área ≈ 779 m²), EPSG:4326",
-        "sourceUrl": "/geovisor/capas/malla_hexagonal_poblacion.geojson",
+        "resolution": "Hexágonos de 20 m entre vértices opuestos; EPSG:5367 → EPSG:4326",
+        "sourceUrl": "/geovisor/capas/malla_hexagonal_20m_poblacion.geojson",
         "status": "publicado"
       },
-      "name": "Distribución de Población — Malla Hexagonal 30 m",
+      "name": "Distribución de Población — Malla Hexagonal 20 m",
       "opacity": 1,
       "source": {
-        "data": "/geovisor/capas/malla_hexagonal_poblacion.geojson",
+        "data": "/geovisor/capas/malla_hexagonal_20m_poblacion.geojson",
         "type": "geojson",
-        "url": "/geovisor/capas/malla_hexagonal_poblacion.geojson"
+        "url": "/geovisor/capas/malla_hexagonal_20m_poblacion.geojson"
       },
       "style": {
         "blendMode": "normal",
@@ -2990,12 +2990,12 @@
     {
       "id": "local-indice-multiamenaza-hex",
       "metadata": {
-        "caveat": "Índice exploratorio: 50% contribución areal de susceptibilidad a deslizamientos MODERADA/ALTA/MUY ALTA (CATEGORIA_ 3–5) y 50% proporción del hexágono dentro de polígonos de inundación potencial. BAJA/MUY BAJA no aportan puntaje. La capa de inundación no tiene severidad; los incidentes CME son conteo de contraste. La población por celda se distribuye desde pob_alta_5_4_hab (total sectorial 30.252), escenario estimado, no censo. Pesos y clases requieren validación técnica. Las zonas de protección de río se muestran aparte como conservación natural.",
-        "resolution": "304 hexágonos de ~30 m; intersecciones calculadas en EPSG:5367; salida EPSG:4326",
+        "caveat": "Índice local exploratorio: 50% deslizamientos ALTA/MUY ALTA (CATEGORIA_ 4–5) y 50% proporción de inundación potencial. La protección de ríos se incorpora como condición de riesgo MUY ALTO (índice 100) y la población de esas celdas se incluye en la población expuesta. Población total distribuida: 30.252; se conserva el total sectorial. Cinco clases: Muy bajo, Bajo, Moderado, Alto, Muy alto.",
+        "resolution": "Malla hexagonal con 20 m entre vértices opuestos; EPSG:5367 → EPSG:4326",
         "sourceUrl": "/geovisor/capas/indice_multiamenaza_local.geojson",
         "status": "en_revision"
       },
-      "name": "Índice local de multiamenaza por hexágono",
+      "name": "Índice local de multiamenaza por hexágono de 20 m",
       "opacity": 1,
       "source": {
         "data": "/geovisor/capas/indice_multiamenaza_local.geojson",
@@ -3139,12 +3139,12 @@
     {
       "id": "local-restricciones-desarrollo-hex",
       "metadata": {
-        "caveat": "Criterio por intersección: las áreas de protección de río se identifican como conservación natural (verde); las áreas CATEGORIA_ 3, 4 y 5 (MODERADA, ALTA, MUY ALTA) se identifican como amenaza por deslizamiento (rojo); el solape aparece morado. BAJA/MUY BAJA no se incluyen en esta capa de restricción. Cuando la intersección es parcial, se resalta el hexágono completo; consulte porcentajes y las capas fuente para el alcance espacial exacto. Criterio de planificación indicado por el equipo; no sustituye delimitaciones normativas ni validación legal.",
-        "resolution": "Celdas que intersectan protección de río o deslizamiento CATEGORIA_ 3–5; polígonos locales EPSG:5367, salida EPSG:4326",
+        "caveat": "Las áreas de protección de ríos se incorporan al índice como riesgo Muy alto, conforme al criterio del equipo y la Ley Forestal 7575; deslizamientos CATEGORIA_ 4 y 5. La capa representa la cartografía fuente y no constituye deslinde jurídico.",
+        "resolution": "Hexágonos de 20 m; protección de ríos y CATEGORIA_ 4–5; EPSG:5367 → EPSG:4326",
         "sourceUrl": "/geovisor/capas/restricciones_desarrollo_hex.geojson",
         "status": "en_revision"
       },
-      "name": "Conservación natural y amenaza por deslizamiento (moderada, alta y muy alta)",
+      "name": "Protección de ríos y deslizamientos altos/muy altos",
       "opacity": 1,
       "source": {
         "data": "/geovisor/capas/restricciones_desarrollo_hex.geojson",
@@ -3359,10 +3359,10 @@
       },
       {
         "caveat": "Estimación basada en Google Open Buildings v3. Factor base: 4.5 personas/vivienda. Modelo piecewise calibrado con datos locales (ratio Google/local = 0.988).",
-        "expected_file_hint": "geovisor/capas/malla_hexagonal_poblacion.geojson",
+        "expected_file_hint": "geovisor/capas/malla_hexagonal_20m_poblacion.geojson",
         "id": "cr-carpio-hex-poblacion",
         "status": "publicado",
-        "title": "Distribución de Población — Malla Hexagonal 30 m"
+        "title": "Distribución de Población — Malla Hexagonal 20 m"
       },
       {
         "caveat": "El equipo solicitante declara que la información fue revisada y es pública; procesada para el geovisor en EPSG:4326.",
@@ -3491,18 +3491,18 @@
         "title": "Huellas de edificios Open Buildings (Open Buildings)"
       },
       {
-        "caveat": "Índice exploratorio: 50% contribución areal de susceptibilidad a deslizamientos MODERADA/ALTA/MUY ALTA (CATEGORIA_ 3–5) y 50% proporción del hexágono dentro de polígonos de inundación potencial. BAJA/MUY BAJA no aportan puntaje. La capa de inundación no tiene severidad; los incidentes CME son conteo de contraste. La población por celda se distribuye desde pob_alta_5_4_hab (total sectorial 30.252), escenario estimado, no censo. Pesos y clases requieren validación técnica. Las zonas de protección de río se muestran aparte como conservación natural.",
+        "caveat": "Índice local exploratorio: 50% deslizamientos ALTA/MUY ALTA (CATEGORIA_ 4–5) y 50% proporción de inundación potencial. La protección de ríos se incorpora como condición de riesgo MUY ALTO (índice 100) y la población de esas celdas se incluye en la población expuesta. Población total distribuida: 30.252; se conserva el total sectorial. Cinco clases: Muy bajo, Bajo, Moderado, Alto, Muy alto.",
         "expected_file_hint": "geovisor/capas/indice_multiamenaza_local.geojson",
         "id": "local-indice-multiamenaza-hex",
         "status": "en_revision",
-        "title": "Índice local de multiamenaza por hexágono"
+        "title": "Índice local de multiamenaza por hexágono de 20 m"
       },
       {
-        "caveat": "Criterio por intersección: las áreas de protección de río se identifican como conservación natural (verde); las áreas CATEGORIA_ 3, 4 y 5 (MODERADA, ALTA, MUY ALTA) se identifican como amenaza por deslizamiento (rojo); el solape aparece morado. BAJA/MUY BAJA no se incluyen en esta capa de restricción. Cuando la intersección es parcial, se resalta el hexágono completo; consulte porcentajes y las capas fuente para el alcance espacial exacto. Criterio de planificación indicado por el equipo; no sustituye delimitaciones normativas ni validación legal.",
+        "caveat": "Las áreas de protección de ríos se incorporan al índice como riesgo Muy alto, conforme al criterio del equipo y la Ley Forestal 7575; deslizamientos CATEGORIA_ 4 y 5. La capa representa la cartografía fuente y no constituye deslinde jurídico.",
         "expected_file_hint": "geovisor/capas/restricciones_desarrollo_hex.geojson",
         "id": "local-restricciones-desarrollo-hex",
         "status": "en_revision",
-        "title": "Conservación natural y amenaza por deslizamiento (moderada, alta y muy alta)"
+        "title": "Protección de ríos y deslizamientos altos/muy altos"
       }
     ],
     "project_id": "cr-la-carpio",
